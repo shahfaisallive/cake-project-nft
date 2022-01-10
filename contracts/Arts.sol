@@ -3,18 +3,26 @@ pragma solidity >=0.4.22 <0.9.0;
 
 // import ERC721 interface
 import "./ERC721.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 // Arts smart contract inherits ERC721 Interface
 contract Arts is ERC721 {
     // string public collectionName;
     // string public collectionSymbol;
     uint256 public artCounter;
+    // string public baseURI;
+    // string public baseExtension = ".json";
+    string public notRevealedUri;
+    bool public revealed = false;
 
     // Defining Art struct
     struct Art {
         uint256 tokenId;
         string tokenName;
         string tokenURI;
+        string unrevealedTokenURI;
         address payable mintedBy;
         address payable currentOwner;
         address payable previousOwner;
@@ -35,10 +43,16 @@ contract Arts is ERC721 {
         // collectionSymbol = symbol();
     }
 
+    // internal
+    // function _baseURI() internal view virtual override returns (string memory) {
+    //     return baseURI;
+    // }
+
     // Minting a new art function
     function mintArt(
         string memory _name,
         string memory _tokenURI,
+        string memory _unrevealedTokenURI,
         uint256 _price
     ) public payable {
         require(msg.sender != address(0));
@@ -59,13 +73,14 @@ contract Arts is ERC721 {
         // make passed token URI as exists
         tokenURIExists[_tokenURI] = true;
         // make token name passed as exists
-        // tokenNameExists[_name] = true;
+        tokenNameExists[_name] = true;
 
         // Create a new art and pass new values
         Art memory newArt = Art(
             artCounter,
             _name,
             _tokenURI,
+            _unrevealedTokenURI,
             payable(msg.sender),
             payable(msg.sender),
             payable(address(0)),
@@ -74,6 +89,58 @@ contract Arts is ERC721 {
         );
         allArts[artCounter] = newArt;
     }
+
+    // Function for Custom token URI based on revealed concept. Overrided!!
+    // function tokenURI(uint256 tokenId)
+    //     public
+    //     view
+    //     virtual
+    //     override
+    //     returns (string memory)
+    // {
+    //     require(
+    //         _exists(tokenId),
+    //         "ERC721Metadata: URI query for nonexistent token"
+    //     );
+
+    //     if (revealed == false) {
+    //         return notRevealedUri;
+    //     }
+
+    //     string memory currentBaseURI = _baseURI();
+    //     return
+    //         bytes(currentBaseURI).length > 0
+    //             ? string(
+    //                 abi.encodePacked(
+    //                     currentBaseURI,
+    //                     // tokenId.toString()
+    //                     tokenId,
+    //                     // baseExtension
+    //                 )
+    //             )
+    //             : "";
+    // }
+
+    //ONLY OWNER FUNCTIONS BELOW
+
+    // reveal function
+    function reveal() public {
+        // revealed = true;
+        for(uint i=1; i<artCounter+1; i++){
+            // delete allArts[i].tokenURI;
+            allArts[i].tokenURI = allArts[i].unrevealedTokenURI;
+            _setTokenURI(i, allArts[i].unrevealedTokenURI);
+        }
+    }
+
+    // Set  not revealed URI
+    function setNotRevealedURI(string memory _notRevealedURI) public {
+        notRevealedUri = _notRevealedURI;
+    }
+
+    // function setBaseURI(string memory _newBaseURI) public onlyOwner {
+    //     baseURI = _newBaseURI;
+    // }
 
     // Get owner of the token
     function getTokenOwner(uint256 _tokenId) public view returns (address) {
@@ -114,11 +181,11 @@ contract Arts is ERC721 {
     }
 
     // Buy Art
-    function buyArt(uint256 _tokenId) external payable {
-        require(
-            msg.value >= 50000000000000000,
-            "Not enough ETH sent; check price!"
-        );
-        transferFrom(ownerOf(_tokenId), msg.sender, _tokenId);
-    }
+    // function buyArt(uint256 _tokenId) external payable {
+    //     require(
+    //         msg.value >= 50000000000000000,
+    //         "Not enough ETH sent; check price!"
+    //     );
+    //     transferFrom(ownerOf(_tokenId), msg.sender, _tokenId);
+    // }
 }

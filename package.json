@@ -53,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^4.3.2",
+    "@openzeppelin/contracts": "^4.4.1",
     "truffle": "^5.4.22"
   }
 }

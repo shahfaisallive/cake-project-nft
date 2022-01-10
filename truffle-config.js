@@ -101,7 +101,7 @@ module.exports = {
     }),
     network_id: 4,
     gas: 5500000,
-    gasPrice: 13149603593,
+    // gasPrice: 13149603593,
     confirmations: 2,
     timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
     skipDryRun: true 

@@ -92,11 +92,11 @@ class App extends Component {
           });
         }
 
-        let totalTokensMinted = await artsContracts.methods
-          .getNumberOfTokensMinted()
-          .call();
-        totalTokensMinted = parseInt(totalTokensMinted);
-        this.setState({ totalTokensMinted });
+        // let totalTokensMinted = await artsContracts.methods
+        //   .getNumberOfTokensMinted()
+        //   .call();
+        // totalTokensMinted = parseInt(totalTokensMinted);
+        // this.setState({ totalTokensMinted });
 
         let totalTokensOwnedByAccount = await artsContracts.methods
           .getTotalNumberOfTokensOwnedByAnAddress(this.state.accountAddress)
@@ -138,18 +138,24 @@ class App extends Component {
   }
 
   // Function for minting new NFT
-  mintMyNFT = async (tokenURI, name, tokenPrice) => {
+  mintMyNFT = async (tokenURI, unrevealedTokenURI, name, tokenPrice) => {
     this.setState({ loading: true });
     const price = window.web3.utils.toWei(tokenPrice.toString(), "Ether");
 
     this.state.artsContracts.methods
-      .mintArt(name, tokenURI, price)
+      .mintArt(name, tokenURI, unrevealedTokenURI, price)
       .send({ from: this.state.accountAddress })
       .on('receipt', function (receipt) {
         console.log(receipt)
       })
       this.setState({ loading: false });
 
+  }
+
+  updateMetaData = async () => {
+    this.state.artsContracts.methods
+    .reveal()
+    .send({ from: this.state.accountAddress })
   }
 
 
@@ -167,7 +173,7 @@ class App extends Component {
             <div>
               <Navbar connectToMetamask={this.connectToMetamask} metamaskConnected={this.state.metamaskConnected} accountAddress={this.state.accountAddress} />
               <Switch>
-                <Route exact path="/" component={() => <Homepage mintMyNFT={this.mintMyNFT} connectToMetamask={this.connectToMetamask} metamaskConnected={this.state.metamaskConnected} accountAddress={this.state.accountAddress}  artsContracts={this.state.artsContracts} arts={this.state.arts} />} />
+                <Route exact path="/" component={() => <Homepage mintMyNFT={this.mintMyNFT} connectToMetamask={this.connectToMetamask} metamaskConnected={this.state.metamaskConnected} accountAddress={this.state.accountAddress}  artsContracts={this.state.artsContracts} arts={this.state.arts} updateMetaData = {this.updateMetaData}  />} />
                 {/* <Route path="/gallery" component={() => <Gallery arts={this.state.arts} />} /> */}
                 {/* <Route path="/mint" component={() => <CreateNft mintMyNFT={this.mintMyNFT} accountAddress={this.state.accountAddress} />} /> */}
               </Switch>

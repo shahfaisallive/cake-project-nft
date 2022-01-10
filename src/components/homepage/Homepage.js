@@ -8,7 +8,7 @@ const ipfs = ipfsClient.create({
     protocol: "https",
 });
 
-const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsContracts, mintMyNFT, arts }) => {
+const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsContracts, mintMyNFT, arts, updateMetaData }) => {
     const [artName, setArtName] = useState("SampleName");
     const [artPrice, setArtPrice] = useState('10');
 
@@ -27,16 +27,35 @@ const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsCo
             tokenId: `${tokenId}`,
             name: artName,
             price: artPrice,
-            image: "https://www.artbyalysia.com/uploads/6/1/6/5/61653353/1561787_orig.jpg",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1024px-Question_Mark.svg.png",
             description: "sample prc data bla bla"
         }
 
+        const UnrevealedTokenObject = await {
+            tokenName: "Artwork NFT",
+            tokenSymbol: "ART",
+            tokenId: `${tokenId}`,
+            name: 'Real Name',
+            price: '101010',
+            image: "https://media.istockphoto.com/photos/color-guide-picture-id544659746?k=20&m=544659746&s=612x612&w=0&h=I1R68yxZFzIT-NaQf-oFwBvDeUtxA2c5II0q_GA791Q=",
+            description: "Real stuff is here"
+        }
+
         console.log(tokenObject)
-        const mid = await ipfs.add(JSON.stringify(tokenObject));
-        let tokenURI = `https://ipfs.infura.io/ipfs/${mid.path}`;
+        console.log(UnrevealedTokenObject)
 
-        await mintMyNFT(tokenURI, artName, artPrice)
+        const cid1 = await ipfs.add(JSON.stringify(tokenObject));
+        let tokenURI = `https://ipfs.infura.io/ipfs/${cid1.path}`;
 
+        const cid2 = await ipfs.add(JSON.stringify(UnrevealedTokenObject));
+        let unrevealedTokenURI = `https://ipfs.infura.io/ipfs/${cid2.path}`;
+
+        await mintMyNFT(tokenURI, unrevealedTokenURI, artName, artPrice)
+
+    }
+
+    const updateURLHandler =  async (id) => {
+       await updateMetaData()
     }
 
 
@@ -64,6 +83,23 @@ const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsCo
                 </div>}
 
             </div>
+        <hr/>
+        
+            <div className='row d-flex justify-content-center mt-5'>
+                {/* <h3>Gallery</h3> */}
+
+                <div className='col-12 justify-content-center'>
+                    {arts ? arts.map(art => (
+                        <div className=''>
+                            <h5>{art.tokenId}</h5>
+                            <p>{art.tokenURI}</p>
+                            <hr/>
+                        </div>
+                    )) : null}
+                </div>
+            </div>
+            <button className='btn btn-primary' onClick={updateMetaData}>Reveal</button>
+
         </div>
     )
 }

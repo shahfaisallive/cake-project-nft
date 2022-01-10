@@ -17,38 +17,14 @@ const CreateNft = ({ mintMyNFT, monstersContract, accountAddress }) => {
     const history = useHistory()
 
     // Declaring State for NFT minting form
-    // const [monsterName, setMonsterName] = useState("");
-    // const [monsterPrice, setMonsterPrice] = useState("");
-    // const [monsterElement, setMonsterElement] = useState();
-    // const [monsterFamily, setMonsterFamily] = useState();
-    // const [monsterSkin, setMonsterSkin] = useState();
     const [DNA, setDNA] = useState(null)
-    // const [uploaded, setUploaded] = useState(false)
 
-    // Abandoned Function
-    // const matchedMonster = useSelector(state => state.matchedMonster);
-    // const { loading, monster, error } = matchedMonster
 
     const randomMonster = useSelector(state => state.randomMonster);
-    // const { loading, monster, error } = randomMonster
-
-    // const ipfsUpload = useSelector(state => state.ipfsUpload);
-    // const { loading: ipfsLoading, ipfsURL, error: ipfsError } = ipfsUpload
 
     useEffect(() => {
-        // if (monsterElement && monsterFamily && monsterSkin) {
-        //     dispatch(matchMonster({ element: monsterElement, family: monsterFamily, skin: monsterSkin }))
-        // }
-
+      
     }, [dispatch])
-
-
-    // Upload Monster handler
-    // const uploadMonsterHandler = async () => {
-    //     await dispatch(ipfsMediaUpload(monster.monsterInfo.filename))
-    //     await setDNA(monster.dna)
-    //     setUploaded(true)
-    // }
 
 
     // Function to call minting Function from Props
@@ -87,11 +63,12 @@ const CreateNft = ({ mintMyNFT, monstersContract, accountAddress }) => {
         }
 
         // console.log(tokenObject)
-        const mid = await ipfs.add(JSON.stringify(tokenObject));
-        let tokenURI = `https://ipfs.infura.io/ipfs/${mid.path}`;
+        const cid = await ipfs.add(JSON.stringify(tokenObject));
+        let tokenURI = `https://ipfs.infura.io/ipfs/${cid.path}`;
 
         if (randomMonster.monster.dna) {
-            // mintMyNFT(monsterName, tokenURI, DNA, monsterPrice, mintValue)
+            // mintMyNFT(monsterName, tokenURI, DNA, monsterPrice, mintValue)   
+            console.log(tokenURI)
             await mintMyNFT(tokenURI, randomMonster.monster.dna, mintValue)
             // history.push(`/monsterdetails/${tokenId}`)
             history.push('/gallery')
