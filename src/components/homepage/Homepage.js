@@ -8,9 +8,9 @@ const ipfs = ipfsClient.create({
     protocol: "https",
 });
 
-const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsContracts, mintMyNFT, arts, updateMetaData }) => {
-    const [artName, setArtName] = useState("SampleName");
-    const [artPrice, setArtPrice] = useState('10');
+const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAddress, setFakeURI, artsContracts, mintMyNFT, arts, updateMetaData }) => {
+    const [artName, setArtName] = useState("Real Stuff");
+    const [artPrice, setArtPrice] = useState('1');
 
 
     const mintNFTHandler = async (e) => {
@@ -25,24 +25,24 @@ const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsCo
             tokenName: "Artwork NFT",
             tokenSymbol: "ART",
             tokenId: `${tokenId}`,
-            name: artName,
+            name: 'Hello Jeee',
             price: artPrice,
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1024px-Question_Mark.svg.png",
-            description: "sample prc data bla bla"
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZHzVVBVClmIqkvb48PlbmN6Dd6s3nyYHEP6dsu9QuVzecwrRfUsTwZY0v6mYHR8tpvrk&usqp=CAU",
+            description: "The real stuff is here"
         }
 
         const UnrevealedTokenObject = await {
             tokenName: "Artwork NFT",
             tokenSymbol: "ART",
             tokenId: `${tokenId}`,
-            name: 'Real Name',
+            name: 'Hello Jeee',
             price: '101010',
-            image: "https://media.istockphoto.com/photos/color-guide-picture-id544659746?k=20&m=544659746&s=612x612&w=0&h=I1R68yxZFzIT-NaQf-oFwBvDeUtxA2c5II0q_GA791Q=",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZHzVVBVClmIqkvb48PlbmN6Dd6s3nyYHEP6dsu9QuVzecwrRfUsTwZY0v6mYHR8tpvrk&usqp=CAU",
             description: "Real stuff is here"
         }
 
         console.log(tokenObject)
-        console.log(UnrevealedTokenObject)
+        // console.log(UnrevealedTokenObject)
 
         const cid1 = await ipfs.add(JSON.stringify(tokenObject));
         let tokenURI = `https://ipfs.infura.io/ipfs/${cid1.path}`;
@@ -54,8 +54,8 @@ const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsCo
 
     }
 
-    const updateURLHandler =  async (id) => {
-       await updateMetaData()
+    const updateURLHandler = async (id) => {
+        await updateMetaData()
     }
 
 
@@ -83,8 +83,8 @@ const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsCo
                 </div>}
 
             </div>
-        <hr/>
-        
+            <hr />
+
             <div className='row d-flex justify-content-center mt-5'>
                 {/* <h3>Gallery</h3> */}
 
@@ -93,12 +93,18 @@ const Homepage = ({ connectToMetamask, metamaskConnected, accountAddress, artsCo
                         <div className=''>
                             <h5>{art.tokenId}</h5>
                             <p>{art.tokenURI}</p>
-                            <hr/>
+                            <hr />
                         </div>
                     )) : null}
                 </div>
             </div>
             <button className='btn btn-primary' onClick={updateMetaData}>Reveal</button>
+
+            <button className='btn btn-danger ml-5' onClick={setFakeURI}>Set Fake URI</button>
+
+            <button className='btn btn-success ml-5' onClick={getTokenURI}>Get Token URI</button>
+
+
 
         </div>
     )

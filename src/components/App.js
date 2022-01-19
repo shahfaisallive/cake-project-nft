@@ -24,6 +24,7 @@ class App extends Component {
       contractDetected: false,
       totalTokensMinted: 0,
       totalTokensOwnedByAccount: 0,
+      tokenURI: ""
     };
   }
 
@@ -31,6 +32,7 @@ class App extends Component {
     await this.loadWeb3();
     await this.loadBlockchainData();
     await this.setMetaData();
+    // await this.getTokenURI()
   };
 
 
@@ -98,11 +100,11 @@ class App extends Component {
         // totalTokensMinted = parseInt(totalTokensMinted);
         // this.setState({ totalTokensMinted });
 
-        let totalTokensOwnedByAccount = await artsContracts.methods
-          .getTotalNumberOfTokensOwnedByAnAddress(this.state.accountAddress)
-          .call();
-        totalTokensOwnedByAccount = parseInt(totalTokensOwnedByAccount);
-        this.setState({ totalTokensOwnedByAccount });
+        // let totalTokensOwnedByAccount = await artsContracts.methods
+        //   .getTotalNumberOfTokensOwnedByAnAddress(this.state.accountAddress)
+        //   .call();
+        // totalTokensOwnedByAccount = parseInt(totalTokensOwnedByAccount);
+        // this.setState({ totalTokensOwnedByAccount });
 
         this.setState({ loading: false });
       } else {
@@ -143,20 +145,43 @@ class App extends Component {
     const price = window.web3.utils.toWei(tokenPrice.toString(), "Ether");
 
     this.state.artsContracts.methods
-      .mintArt(name, tokenURI, unrevealedTokenURI, price)
+      .mintArt(tokenURI)
       .send({ from: this.state.accountAddress })
       .on('receipt', function (receipt) {
         console.log(receipt)
       })
-      this.setState({ loading: false });
+    this.setState({ loading: false });
 
   }
 
   updateMetaData = async () => {
     this.state.artsContracts.methods
-    .reveal()
-    .send({ from: this.state.accountAddress })
+      .reveal()
+      .send({ from: this.state.accountAddress })
   }
+
+  setFakeURI = async () => {
+    this.state.artsContracts.methods
+      .setBaseURI('https://bafybeihdgjmeujxgbiwfh7dfmbgedlq6xff5i4ql4uykpola2g5yvgbdoa.ipfs.infura-ipfs.io')
+      .send({ from: this.state.accountAddress })
+  }
+
+
+  getTokenURI = async () => {
+    // const uri = this.state.artsContracts.methods
+    //   .tokenURI(1)
+    //   .call()
+    //   .on('receipt', function (receipt) {
+    //     console.log(uri)
+    //     this.setState({tokenURI: uri})
+    //   })
+  }
+
+    // getTokenURI = async (id) => {
+    //   this.state.artsContracts.methods
+    //     .tokenURI(id)
+    //     .send({ from: this.state.accountAddress })
+    // }
 
 
   render() {
@@ -173,7 +198,9 @@ class App extends Component {
             <div>
               <Navbar connectToMetamask={this.connectToMetamask} metamaskConnected={this.state.metamaskConnected} accountAddress={this.state.accountAddress} />
               <Switch>
-                <Route exact path="/" component={() => <Homepage mintMyNFT={this.mintMyNFT} connectToMetamask={this.connectToMetamask} metamaskConnected={this.state.metamaskConnected} accountAddress={this.state.accountAddress}  artsContracts={this.state.artsContracts} arts={this.state.arts} updateMetaData = {this.updateMetaData}  />} />
+                <Route exact path="/" component={() => <Homepage mintMyNFT={this.mintMyNFT} connectToMetamask={this.connectToMetamask} metamaskConnected={this.state.metamaskConnected}
+                  accountAddress={this.state.accountAddress} artsContracts={this.state.artsContracts} 
+                  arts={this.state.arts} updateMetaData={this.updateMetaData} setFakeURI={this.setFakeURI} getTokenURI={this.getTokenURI} />} />
                 {/* <Route path="/gallery" component={() => <Gallery arts={this.state.arts} />} /> */}
                 {/* <Route path="/mint" component={() => <CreateNft mintMyNFT={this.mintMyNFT} accountAddress={this.state.accountAddress} />} /> */}
               </Switch>
