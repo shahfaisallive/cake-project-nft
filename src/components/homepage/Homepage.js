@@ -66,8 +66,9 @@ const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAd
     return (
         <div className='container'>
             <div className='row d-flex justify-content-center'>
-                <h1 className="display-2">NFT Website</h1>
+                <h1 className="display-2">Cake Project</h1>
             </div>
+            <h4 className="text-center">(Demo Template)</h4>
             <hr />
             <div className="row d-flex justify-content-center">
                 {!metamaskConnected ? <button className="btn btn-outline-success bg-light" type="button"
