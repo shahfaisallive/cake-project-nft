@@ -7,8 +7,7 @@ import Arts from '../abis/Arts.json';
 // Importing components
 import Navbar from './header/Navbar';
 import Homepage from './homepage/Homepage';
-// import Gallery from './gallery/Gallery';
-// import CreateNft from './create-nft/CreateNft';
+
 
 class App extends Component {
   constructor(props) {
