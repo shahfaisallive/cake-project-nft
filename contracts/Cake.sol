@@ -2,62 +2,37 @@
 pragma solidity >=0.5.0 <0.9.0;
 
 // import ERC721 interface
-// import "./ERC721.sol";
 // import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-
-// Arts smart contract inherits ERC721 Interface
-contract Arts is Ownable, ERC721Enumerable {
+// Cake smart contract inherits ERC721 Interface
+contract Cake is Ownable, ERC721Enumerable {
     using SafeMath for uint256;
     using Strings for uint256;
 
-
-    // string public collectionName;
-    // string public collectionSymbol;
-    uint256 public artCounter;
+    uint256 public cakeCounter;
     string private _baseURIextended = "";
-    // string public baseURI;
     // string public baseExtension = ".json";
     string public notRevealedUri;
     bool public revealed = false;
 
-    // Defining Art struct
-    struct Art {
-        uint256 tokenId;
-        // string tokenName;
-        string tokenURI;
-        string unrevealedTokenURI;
-        address mintedBy;
-        address currentOwner;
-        address previousOwner;
-        // uint256 price;
-        // bool forSale;
-    }
 
     // Optional mapping for token URIs
     mapping(uint256 => string) private _tokenURIs;
-
-    // map arts's token id to artwork
-    mapping(uint256 => Art) public allArts;
     // check if token name exists
     mapping(string => bool) public tokenNameExists;
     // check if token URI exists
     mapping(string => bool) public tokenURIExists;
 
     // initialize contract while deployment with contract's collection name and token
-    constructor() ERC721("Beautiful Art", "ART") {
-        // collectionName = name();
-        // collectionSymbol = symbol();
+    constructor() ERC721("Cake Project", "CAKE") {
         setNotRevealedURI("https://ipfs.infura.io/ipfs/QmNwN2Us6uFGoPYXnXjhwmmbPRwWyPqg1QV7tdSoGwHpi5");        
     }
 
-    // internal
-
-    function setBaseURI(string memory baseURI_) external {
+    function setBaseURI(string memory baseURI_) external onlyOwner {
         _baseURIextended = baseURI_;
     }
 
@@ -93,33 +68,26 @@ contract Arts is Ownable, ERC721Enumerable {
 
         if (revealed == false) {
             return notRevealedUri;
-        } else {
-            return _tokenURI;
-        }
+        } 
 
         // If there is no base URI, return the token URI.
-        // if (bytes(base).length == 0) {
-        //     return _tokenURI;
-        // }
+        if (bytes(base).length == 0) {
+            return _tokenURI;
+        }
         
         // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
-        // if (bytes(_tokenURI).length > 0) {
-        //     return string(abi.encodePacked(base, _tokenURI));
-        // }
+        if (bytes(_tokenURI).length > 0) {
+            return string(abi.encodePacked(base, _tokenURI));
+        }
         // If there is a baseURI but no tokenURI, concatenate the tokenID to the baseURI.
-        // return string(abi.encodePacked(base, tokenId.toString()));
+        return string(abi.encodePacked(base, tokenId.toString()));
     }
 
 
     //ONLY OWNER FUNCTIONS BELOW
     // reveal function
-    function reveal(bool _state) public {
+    function reveal(bool _state) public onlyOwner {
         revealed = _state;
-        // for(uint i=1; i<artCounter+1; i++){
-        //     // delete allArts[i].tokenURI;
-        //     allArts[i].tokenURI = allArts[i].unrevealedTokenURI;
-        //     _setTokenURI(i, allArts[i].unrevealedTokenURI);
-        // }
     }
 
     // Set  not revealed URI
@@ -128,51 +96,28 @@ contract Arts is Ownable, ERC721Enumerable {
     }
 
 
-    // Minting a new art function
-    function mintArt(
-        // string memory _name,
+    // Minting a new cake function
+    function mintCake(
         string memory _tokenURI
-    ) public payable // uint256 _price
+    ) public payable
     {
         require(msg.sender != address(0));
 
-        artCounter++;
+        cakeCounter++;
 
         // Checking for requirements
-        require(!_exists(artCounter));
+        require(!_exists(cakeCounter));
         require(!tokenURIExists[_tokenURI]);
-        // require(!tokenNameExists[_name]);
-        require(!_exists(artCounter));
+        require(!_exists(cakeCounter));
 
         // Mint the token here
-        _safeMint(msg.sender, artCounter);
+        _safeMint(msg.sender, cakeCounter);
 
         // set token URI (bind token id with the passed in token URI)
-        _setTokenURI(artCounter, _tokenURI);
+        _setTokenURI(cakeCounter, _tokenURI);
         // make passed token URI as exists
         tokenURIExists[_tokenURI] = true;
-        // make token name passed as exists
-        // tokenNameExists[_name] = true;
-
-        // Create a new art and pass new values
-        Art memory newArt = Art(
-            artCounter,
-            // _name,
-            _tokenURI,
-            notRevealedUri,
-            payable(msg.sender),
-            payable(msg.sender),
-            payable(address(0))
-            // _price,
-            // true
-        );
-        allArts[artCounter] = newArt;
     }
-
-
-    // function setBaseURI(string memory _newBaseURI) public onlyOwner {
-    //     baseURI = _newBaseURI;
-    // }
 
     // Get owner of the token
     function getTokenOwner(uint256 _tokenId) public view returns (address) {
@@ -206,18 +151,4 @@ contract Arts is Ownable, ERC721Enumerable {
         return totalNumberOfTokensOwned;
     }
 
-    // check if the token already exists
-    function getTokenExists(uint256 _tokenId) public view returns (bool) {
-        bool tokenExists = _exists(_tokenId);
-        return tokenExists;
-    }
-
-    // Buy Art
-    // function buyArt(uint256 _tokenId) external payable {
-    //     require(
-    //         msg.value >= 50000000000000000,
-    //         "Not enough ETH sent; check price!"
-    //     );
-    //     transferFrom(ownerOf(_tokenId), msg.sender, _tokenId);
-    // }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Web3 from 'web3';
-import Arts from '../abis/Arts.json';
+import Arts from '../abis/Cake.json';
 
 
 // Importing components
@@ -79,7 +79,7 @@ class App extends Component {
         this.setState({ artsContracts });
         this.setState({ contractDetected: true });
         const artsCount = await artsContracts.methods
-          .artCounter()
+          .cakeCounter()
           .call();
         this.setState({ artsCount });
         console.log(artsCount)
@@ -144,7 +144,7 @@ class App extends Component {
     const price = window.web3.utils.toWei(tokenPrice.toString(), "Ether");
 
     this.state.artsContracts.methods
-      .mintArt(tokenURI)
+      .mintCake(tokenURI)
       .send({ from: this.state.accountAddress })
       .on('receipt', function (receipt) {
         console.log(receipt)
@@ -167,13 +167,13 @@ class App extends Component {
 
 
   getTokenURI = async () => {
-    // const uri = this.state.artsContracts.methods
-    //   .tokenURI(1)
-    //   .call()
-    //   .on('receipt', function (receipt) {
-    //     console.log(uri)
-    //     this.setState({tokenURI: uri})
-    //   })
+    const uri = this.state.artsContracts.methods
+      .getTokenMetaData(1)
+      .call()
+      .on('receipt', function (receipt) {
+        console.log(uri)
+        this.setState({tokenURI: uri})
+      })
   }
 
     // getTokenURI = async (id) => {
