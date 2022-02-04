@@ -8,49 +8,34 @@ const ipfs = ipfsClient.create({
     protocol: "https",
 });
 
-const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAddress, setFakeURI, artsContracts, mintMyNFT, arts, updateMetaData }) => {
+const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAddress, setFakeURI, cakeContracts, mintMyNFT, cakes, updateMetaData }) => {
     const [artName, setArtName] = useState("Real Stuff");
-    const [artPrice, setArtPrice] = useState('1');
-
 
     const mintNFTHandler = async (e) => {
         e.preventDefault();
-        let previousTokenId = await artsContracts.methods
-            .artCounter()
+        let previousTokenId = await cakeContracts.methods
+            .cakeCounter()
             .call();
         previousTokenId = parseInt(previousTokenId);
         const tokenId = previousTokenId + 1;
+        console.log(tokenId);
 
         const tokenObject = await {
-            tokenName: "Artwork NFT",
+            tokenName: "Cake NFT",
             tokenSymbol: "ART",
             tokenId: `${tokenId}`,
-            name: 'Hello Jeee',
-            price: artPrice,
+            name: 'Hello',
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZHzVVBVClmIqkvb48PlbmN6Dd6s3nyYHEP6dsu9QuVzecwrRfUsTwZY0v6mYHR8tpvrk&usqp=CAU",
             description: "The real stuff is here"
         }
 
-        const UnrevealedTokenObject = await {
-            tokenName: "Artwork NFT",
-            tokenSymbol: "ART",
-            tokenId: `${tokenId}`,
-            name: 'Hello Jeee',
-            price: '101010',
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZHzVVBVClmIqkvb48PlbmN6Dd6s3nyYHEP6dsu9QuVzecwrRfUsTwZY0v6mYHR8tpvrk&usqp=CAU",
-            description: "Real stuff is here"
-        }
-
         console.log(tokenObject)
-        // console.log(UnrevealedTokenObject)
 
         const cid1 = await ipfs.add(JSON.stringify(tokenObject));
         let tokenURI = `https://ipfs.infura.io/ipfs/${cid1.path}`;
+        console.log(tokenURI);
 
-        const cid2 = await ipfs.add(JSON.stringify(UnrevealedTokenObject));
-        let unrevealedTokenURI = `https://ipfs.infura.io/ipfs/${cid2.path}`;
-
-        await mintMyNFT(tokenURI, unrevealedTokenURI, artName, artPrice)
+        await mintMyNFT(tokenURI, 0.02)
 
     }
 
@@ -60,8 +45,8 @@ const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAd
 
 
     useEffect(() => {
-        console.log(arts)
-    }, [arts])
+        console.log(cakes)
+    }, [cakes])
 
     return (
         <div className='container'>
@@ -90,7 +75,7 @@ const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAd
                 {/* <h3>Gallery</h3> */}
 
                 <div className='col-12 justify-content-center'>
-                    {arts ? arts.map(art => (
+                    {cakes ? cakes.map(art => (
                         <div className=''>
                             <h5>{art.tokenId}</h5>
                             <p>{art.tokenURI}</p>
@@ -101,9 +86,9 @@ const Homepage = ({ connectToMetamask, metamaskConnected, getTokenURI, accountAd
             </div>
             <button className='btn btn-primary' onClick={updateMetaData}>Reveal</button>
 
-            <button className='btn btn-danger ml-5' onClick={setFakeURI}>Set Fake URI</button>
+            {/* <button className='btn btn-danger ml-5' onClick={setFakeURI}>Set Fake URI</button>
 
-            <button className='btn btn-success ml-5' onClick={getTokenURI}>Get Token URI</button>
+            <button className='btn btn-success ml-5' onClick={getTokenURI}>Get Token URI</button> */}
 
 
 

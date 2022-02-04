@@ -29,8 +29,8 @@ require("babel-register");
 require("babel-polyfill");
 
 const private_keys = [
-  "5b581848627f37c7a5a4b659719f1b4f669b68851b176b19b5239a88097f4d55",
   "e1226c74fba7455387af4c63d3ca2b0db6794f6079e379633713d6250195e85d",
+  "5b581848627f37c7a5a4b659719f1b4f669b68851b176b19b5239a88097f4d55"
 ]
 
 module.exports = {

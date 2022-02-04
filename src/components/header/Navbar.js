@@ -14,7 +14,10 @@ const Navbar = ({ connectToMetamask, metamaskConnected, accountAddress }) => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-item nav-link" to="/">Home</Link>
-                        {/* <Link className="nav-item nav-link" to="/gallery">Gallery</Link> */}
+
+                        {accountAddress === '0x0b7C7Efe2183fEf476b5f86cE53dA612c5dC89b6' ?
+                            <Link className="nav-item nav-link" to="/admin">Admin Panel</Link>
+                            : null}
                     </div>
                 </div>
             </nav>
