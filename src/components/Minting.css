@@ -1,0 +1,91 @@
+.mint-wrapper {
+    padding-bottom: 60px;
+    padding-top: 60px;
+}
+
+.mint-right-box {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.mint-img {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+.mint-box {
+    padding: 40px 60px;
+    border: 2px solid #fa06ba;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+.mint-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.mint-text1 {
+    font-size: 14px;
+    color: #fa06ba;
+}
+
+.mint-text2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: yellow;
+}
+
+.mint-text3 {
+    font-size: 16px;
+    color: #fff;
+}
+
+.mint-text4 {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.mint-connect-btn{
+    border: none;
+    border-radius: 4px;
+    background-color: #fa06ba;
+    color: #fff;
+    padding: 10px 20px;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.counter-btn {
+    background-color: #fa06ba;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 30px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.counter-btn:hover {
+    background-color: #c90895;
+}
+
+.mint-btn {
+    background-color: #fa06ba;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 60px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.mint-btn:hover {
+    background-color: #c90895;
+}

@@ -1,0 +1,26 @@
+.navbar{
+    background-color: #000;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.toggle-btn{
+    background-color: #fff ;
+}
+.connect-btn{
+    border: none;
+    border-radius: 4px;
+    background-color: #fa06ba;
+    color: #fff;
+    padding: 10px 20px;
+    font-weight: 700;
+}
+.connect-btn:hover{
+    background-color: #000;
+    color: #fa06ba;
+    border: 1px solid #fa06ba;
+}
+.address-tab{
+    color: #fff;
+    margin-top: 10px;
+}

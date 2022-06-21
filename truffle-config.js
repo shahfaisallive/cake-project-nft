@@ -74,14 +74,14 @@ module.exports = {
     // },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    ropsten: {
-      provider: () => new HDWalletProvider(mnm, `https://ropsten.infura.io/v3/${projectId}`),
-      network_id: 3,       // Ropsten's id
-      gas: 5500000,        // Ropsten has a lower block limit than mainnet
-      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    },
+    // ropsten: {
+    //   provider: () => new HDWalletProvider(mnm, `https://ropsten.infura.io/v3/${projectId}`),
+    //   network_id: 3,       // Ropsten's id
+    //   gas: 5500000,        // Ropsten has a lower block limit than mainnet
+    //   confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+    //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+    //   skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    // },
 
     // rinkbey
   //   rinkeby: {
@@ -93,19 +93,19 @@ module.exports = {
   //     gasPrice: 10000000000,
   // }
 
-  rinkeby: {
-    provider: () => new HDWalletProvider({
-      privateKeys: private_keys,
-      providerOrUrl: `wss://rinkeby.infura.io/ws/v3/a1a02542b2914a2ab7d8abc11b133f8a`,
-      numberOfAddresses: 2
-    }),
-    network_id: 4,
-    gas: 5500000,
-    // gasPrice: 13149603593,
-    confirmations: 2,
-    timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-    skipDryRun: true 
-}
+//   rinkeby: {
+//     provider: () => new HDWalletProvider({
+//       privateKeys: private_keys,
+//       providerOrUrl: `wss://rinkeby.infura.io/ws/v3/a1a02542b2914a2ab7d8abc11b133f8a`,
+//       numberOfAddresses: 2
+//     }),
+//     network_id: 4,
+//     gas: 5500000,
+//     // gasPrice: 13149603593,
+//     confirmations: 2,
+//     timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+//     skipDryRun: true 
+// }
 
     // Useful for private networks
     // private: {
