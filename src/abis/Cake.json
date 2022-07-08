@@ -1,6 +1,7 @@
 {
     "contractName": "Cake",
-    "contractAddress": "0x0bd55A2D430158a9114C10844E39460702117353",
+    "testContractAddress": "0x0bd55A2D430158a9114C10844E39460702117353",
+    "contractAddress": "0x995FAB08a70D916aA03D2Ae59e42D45343bbcE93",
     "abi": [
         {
             "inputs": [],

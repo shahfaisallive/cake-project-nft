@@ -6,7 +6,7 @@
 .mint-right-box {
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 100%;
 }
 
 .mint-img {
@@ -14,6 +14,7 @@
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
+    transform: scaleX(-1);
 }
 
 .mint-box {
@@ -88,4 +89,21 @@
 
 .mint-btn:hover {
     background-color: #c90895;
+}
+
+.mint-text-sold{
+    font-size: 22px;
+    color: #fff;
+}
+
+.mint-title-sold{
+    font-size: 50px;
+    color: #fa06ba;
+    font-weight: 800;
+}
+.opensea-link{
+    font-size: 20px;
+    color: yellow;
+    margin-left: auto;
+    margin-right: auto;
 }

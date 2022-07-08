@@ -19,10 +19,10 @@ const Minting = ({ metamaskConnected, connectToMetamask, accountAddress, mintNFT
                 <div className="row">
                     <div className='col-md-6 pt-5'>
                         <div className='mint-box'>
-                            {metamaskConnected ? <div>
+                            {/* {metamaskConnected ? <div>
                                 <p className='mint-title text-center'>MINT YOUR MONKEY</p>
                                 <p className='mint-text1 text-center'><b>You Address </b>{accountAddress}</p>
-                                <p className='mint-text2 text-center mt-1'>FREE MINT</p>
+                                <p className='mint-text2 text-center mt-1'> 0.0 Eth + Gas</p>
                                 <div className='row d-flex justify-content-between mt-4'>
                                     <button className='counter-btn' onClick={() => { amount > 0 ? setAmount(amount - 1) : console.log("No negative value") }}>-</button>
                                     <button className='mint-btn' onClick={mintHandler}>Mint</button>
@@ -37,13 +37,16 @@ const Minting = ({ metamaskConnected, connectToMetamask, accountAddress, mintNFT
                                         Connect to Metamask
                                     </button>
                                 </div>
-                            </div>}
+                            </div>} */}
+                            <p className='mint-title-sold text-center'>SOLD OUT</p>
+                            {/* <p className='mint-text-sold text-center'>Thanks for your contribution to the community</p> */}
+                            <a className='opensea-link' href="https://opensea.io/collection/cakex" target={'_blank'}><p className='text-center mt-2'>Get yours on Opensea</p></a>
                         </div>
                     </div>
 
-                    <div className='col-md-6 pt-5'>
+                    <div className='col-md-6 mt-3'>
                         <div className='mint-right-box'>
-                            <img src='/images/cake-mint.gif' className='mint-img' alt='mint-gif' />
+                            <img src='/images/cake-mint.png' className='mint-img' alt='mint-gif' />
                         </div>
                     </div>
                 </div>

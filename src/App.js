@@ -53,8 +53,11 @@ function App() {
       );
 
       setCakeContract(contract)
-        console.log(contract)
+        // console.log(contract)
       setContractDetected(true)
+
+      const name = await contract.methods.name().call()
+      console.log("Name of this contract is: ", name)
 
       const owner = await contract.methods
         .owner()
